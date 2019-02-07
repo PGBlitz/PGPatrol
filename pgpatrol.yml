@@ -46,7 +46,7 @@
 
     - name: Install pip requirements
       pip:
-        requirements: /opt/plexguide/menu/pgpatrol/requirements.txt
+        requirements: /opt/pgpatrol/requirements.txt
         executable: pip3
 
     - name: "Including cron job"
@@ -61,10 +61,10 @@
     #  stat:
     #    path: "/opt/appdata/pgpatrol/settings.ini"
     #  register: config
- 
+
     - name: Transfer Files
       copy:
-        src: /opt/plexguide/menu/pgpatrol
+        src: /opt/pgpatrol
         dest: /opt/appdata
         owner: "1000"
         group: "1000"
