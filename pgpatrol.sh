@@ -140,7 +140,7 @@ EOF
   if [ "$typed" == "1" ]; then selection1;
 elif [ "$typed" == "2" ]; then selection2;
 elif [ "$typed" == "3" ]; then selection3;
-elif [ "$typed" == "4" ]; then ansible-playbook /opt/plexguide/menu/pgpatrol/pgpatrol.yml && question1;
+elif [ "$typed" == "4" ]; then ansible-playbook /opt/pgpatrol/pgpatrol.yml && question1;
 elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then exit;
 else badinput; fi
 }
