@@ -130,7 +130,7 @@ tee <<-EOF
 2 - UserName | Multiple IPs?           [$ips]
 3 - Minutes  | Kick Paused Transcode?  [$minutes]
 4 - Deploy PGPatrol                    [$dstatus]
-Z - EXIT
+Z - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
