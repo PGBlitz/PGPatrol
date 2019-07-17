@@ -23,12 +23,14 @@ KICK_PAUSED_TRANSCODES = config('KICK_PAUSED_TRANSCODES', False, cast=bool)
 KICK_PAUSED_DIRECTPLAY = config('KICK_PAUSED_DIRECTPLAY', False, cast=bool)
 KICK_PAUSED_GRACE_MINS = config('KICK_PAUSED_GRACE_MINS', 5, cast=int)
 
-KICK_PAUSED_MESSAGE = config('KICK_PAUSED_MESSAGE', 'You are not allowed to pause a stream for that long... cya!')
+KICK_PAUSED_MESSAGE = config(
+    'KICK_PAUSED_MESSAGE', 'You are not allowed to pause a stream for that long... cya!')
 KICK_TRANSCODE_MESSAGE = config('KICK_TRANSCODE_MESSAGE',
                                 'You are not allowed to transcode streams, use a better client!')
 KICK_PLAYER_MESSAGE = config('KICK_PLAYER_MESSAGE',
                              'You are not allowed to use this trash player. '
                              'Use the official software from www.plex.tv/downloads -> Get An App!!!')
-KICK_MULTI_IP_MESSAGE = config('KICK_MULTI_IP_MESSAGE', 'You are not allowed to stream from more than 1 IP address!')
+KICK_MULTI_IP_MESSAGE = config(
+    'KICK_MULTI_IP_MESSAGE', 'You are not allowed to stream from more than 1 IP address!')
 
 WHITELISTED_USERS = config('WHITELISTED_USERS', [], cast=Csv())

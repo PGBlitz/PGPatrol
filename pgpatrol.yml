@@ -11,37 +11,37 @@
   gather_facts: false
   tasks:
     # FACTS ######################################################################
-    - name: "Set Known Facts"
+    - name: 'Set Known Facts'
       set_fact:
-        pgrole: "pgpatrol"
-        extport: "0"
+        pgrole: 'pgpatrol'
+        extport: '0'
 
     - name: Server ID
-      shell: "cat /var/plexguide/pg.serverid"
+      shell: 'cat /var/plexguide/pg.serverid'
       register: serverid
 
     - name: Token Recall
-      shell: "cat /var/plexguide/plex.token"
+      shell: 'cat /var/plexguide/plex.token'
       register: plextoken
 
     - name: Recall User
-      shell: "cat /var/plexguide/plex.user"
+      shell: 'cat /var/plexguide/plex.user'
       register: user
 
     - name: Register IP
-      shell: "cat /var/plexguide/server.ip"
+      shell: 'cat /var/plexguide/server.ip'
       register: ipaddress
 
     - name: Video Transcodes Info
-      shell: "cat /var/plexguide/pgpatrol/multiple.ips"
+      shell: 'cat /var/plexguide/pgpatrol/multiple.ips'
       register: multipleips
 
     - name: Multiple IPs Info
-      shell: "cat /var/plexguide/pgpatrol/video.transcodes"
+      shell: 'cat /var/plexguide/pgpatrol/video.transcodes'
       register: videotranscodes
 
     - name: Paused Info
-      shell: "cat /var/plexguide/pgpatrol/kick.minutes"
+      shell: 'cat /var/plexguide/pgpatrol/kick.minutes'
       register: kickminutes
 
     - name: Install pip requirements
@@ -49,13 +49,13 @@
         requirements: /opt/pgpatrol/requirements.txt
         executable: pip3
 
-    - name: "Including cron job"
-      include_tasks: "/opt/coreapps/apps/_core.yml"
+    - name: 'Including cron job'
+      include_tasks: '/opt/coreapps/apps/_core.yml'
 
     - name: Create Basic Directories
-      file: "path={{item}} state=directory mode=0775 owner=1000 group=1000"
+      file: 'path={{item}} state=directory mode=0775 owner=1000 group=1000'
       with_items:
-        - "/opt/appdata/pgpatrol/"
+        - '/opt/appdata/pgpatrol/'
 
     #- name: Check INI's Existance
     #  stat:
@@ -66,8 +66,8 @@
       copy:
         src: /opt/pgpatrol
         dest: /opt/appdata
-        owner: "1000"
-        group: "1000"
+        owner: '1000'
+        group: '1000'
         mode: a+x
         force: yes
 
@@ -75,15 +75,15 @@
       template:
         src: /opt/appdata/pgpatrol/settings.ini.default
         dest: /opt/appdata/pgpatrol/settings.ini
-        owner: "1000"
-        group: "1000"
+        owner: '1000'
+        group: '1000'
         mode: 0775
         force: yes
 
       #when: not config.stat.exists
     - name: Check Service's Existance
       stat:
-        path: "/etc/systemd/system/pgpatrol.service"
+        path: '/etc/systemd/system/pgpatrol.service'
       register: pgp
 
     - name: Stop service

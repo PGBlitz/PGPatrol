@@ -12,58 +12,62 @@ mkdir -p /var/plexguide/pgpatrol
 # FUNCTIONS START ##############################################################
 
 # FIRST FUNCTION
-variable () {
+variable() {
   file="$1"
-  if [ ! -e "$file" ]; then echo "$2" > $1; fi
+  if [ ! -e "$file" ]; then echo "$2" >$1; fi
 }
 
-deploycheck () {
+deploycheck() {
   dcheck=$(systemctl status pgpatrol | grep "\(running\)\>" | grep "\<since\>")
-  if [ "$dcheck" != "" ]; then dstatus="✅ DEPLOYED";
-else dstatus="⚠️ NOT DEPLOYED"; fi
+  if [ "$dcheck" != "" ]; then
+    dstatus="✅ DEPLOYED"
+  else dstatus="⚠️ NOT DEPLOYED"; fi
 }
 
-plexcheck () {
+plexcheck() {
   pcheck=$(docker ps | grep "\<plex\>")
   if [ "$pcheck" == "" ]; then
 
-tee <<-EOF
+    tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Plex is Not Installed or Running! Exiting!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed < /dev/tty
-    exit; fi
+    read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+    exit
+  fi
 }
 
-token () {
- touch /var/plexguide/plex.token
- ptoken=$(cat /var/plexguide/plex.token)
- if [ "$ptoken" == "" ]; then
-   bash /opt/plexguide/menu/plex/token.sh
-   ptoken=$(cat /var/plexguide/plex.token)
-   if [ "$ptoken" == "" ]; then
-tee <<-EOF
+token() {
+  touch /var/plexguide/plex.token
+  ptoken=$(cat /var/plexguide/plex.token)
+  if [ "$ptoken" == "" ]; then
+    bash /opt/plexguide/menu/plex/token.sh
+    ptoken=$(cat /var/plexguide/plex.token)
+    if [ "$ptoken" == "" ]; then
+      tee <<-EOF
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Failed to Generate a Valid Plex Token! Exiting Deployment!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 EOF
-    read -p 'Confirm Info | PRESS [ENTER] ' typed < /dev/tty
-    exit; fi; fi
+      read -p 'Confirm Info | PRESS [ENTER] ' typed </dev/tty
+      exit
+    fi
+  fi
 }
 
 # BAD INPUT
-badinput () {
-echo
-read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed < /dev/tty
-question1
+badinput() {
+  echo
+  read -p '⛔️ ERROR - BAD INPUT! | PRESS [ENTER] ' typed </dev/tty
+  question1
 }
 
-selection1 () {
-tee <<-EOF
+selection1() {
+  tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Instantly Kick Video Transcodes?
@@ -74,14 +78,16 @@ tee <<-EOF
 2 - True
 
 EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed < /dev/tty
-    if [ "$typed" == "1" ]; then echo "False" > /var/plexguide/pgpatrol/video.transcodes && question1;
-  elif [ "$typed" == "2" ]; then echo "True" > /var/plexguide/pgpatrol/video.transcodes && question1;
-    else badinput; fi
+  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
+  if [ "$typed" == "1" ]; then
+    echo "False" >/var/plexguide/pgpatrol/video.transcodes && question1
+  elif [ "$typed" == "2" ]; then
+    echo "True" >/var/plexguide/pgpatrol/video.transcodes && question1
+  else badinput; fi
 }
 
-selection2 () {
-tee <<-EOF
+selection2() {
+  tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Limit Amount of Different IPs a User Can Make?
@@ -91,13 +97,14 @@ tee <<-EOF
 Set a Number from 1 - 99
 
 EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed < /dev/tty
-    if [[ "$typed" -ge "1" && "$typed" -le "99" ]]; then echo "$typed" > /var/plexguide/pgpatrol/multiple.ips && question1;
-    else badinput; fi
+  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
+  if [[ "$typed" -ge "1" && "$typed" -le "99" ]]; then
+    echo "$typed" >/var/plexguide/pgpatrol/multiple.ips && question1
+  else badinput; fi
 }
 
-selection3 () {
-tee <<-EOF
+selection3() {
+  tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 Limit How Long a User Can Pause For!
@@ -107,19 +114,20 @@ tee <<-EOF
 Set a Number from 5 - 999 Mintues
 
 EOF
-  read -p 'Type Number | PRESS [ENTER] ' typed < /dev/tty
-    if [[ "$typed" -ge "1" && "$typed" -le "999" ]]; then echo "$typed" > /var/plexguide/pgpatrol/kick.minutes && question1;
-    else badinput; fi
+  read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
+  if [[ "$typed" -ge "1" && "$typed" -le "999" ]]; then
+    echo "$typed" >/var/plexguide/pgpatrol/kick.minutes && question1
+  else badinput; fi
 }
 
 # FIRST QUESTION
-question1 () {
+question1() {
 
-video=$(cat /var/plexguide/pgpatrol/video.transcodes)
-ips=$(cat /var/plexguide/pgpatrol/multiple.ips)
-minutes=$(cat /var/plexguide/pgpatrol/kick.minutes)
+  video=$(cat /var/plexguide/pgpatrol/video.transcodes)
+  ips=$(cat /var/plexguide/pgpatrol/multiple.ips)
+  minutes=$(cat /var/plexguide/pgpatrol/kick.minutes)
 
-tee <<-EOF
+  tee <<-EOF
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 🚀 PG Patrol Interface
@@ -135,14 +143,19 @@ Z - Exit
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 EOF
 
-  read -p '↘️  Type Number | Press [ENTER]: ' typed < /dev/tty
+  read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
 
-  if [ "$typed" == "1" ]; then selection1;
-elif [ "$typed" == "2" ]; then selection2;
-elif [ "$typed" == "3" ]; then selection3;
-elif [ "$typed" == "4" ]; then ansible-playbook /opt/pgpatrol/pgpatrol.yml && question1;
-elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then exit;
-else badinput; fi
+  if [ "$typed" == "1" ]; then
+    selection1
+  elif [ "$typed" == "2" ]; then
+    selection2
+  elif [ "$typed" == "3" ]; then
+    selection3
+  elif [ "$typed" == "4" ]; then
+    ansible-playbook /opt/pgpatrol/pgpatrol.yml && question1
+  elif [[ "$typed" == "Z" || "$typed" == "z" ]]; then
+    exit
+  else badinput; fi
 }
 
 # FUNCTIONS END ##############################################################

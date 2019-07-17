@@ -25,7 +25,8 @@ def add_stream_ip(user, ip):
     if user in ip_watchlist:
         # does ip exist
         if ip in ip_watchlist[user]:
-            log.debug("Skipping adding ip %s to watchlist for user %s because it is already in there!", ip, user)
+            log.debug(
+                "Skipping adding ip %s to watchlist for user %s because it is already in there!", ip, user)
             return
         else:
             ip_watchlist[user].append(ip)
@@ -37,7 +38,8 @@ def add_stream_ip(user, ip):
 # main
 
 def kill_paused_stream(stream, check_again_mins, kick_reason):
-    log.info("%s will have their stream killed in %d mins, unless it is resumed", stream.user, check_again_mins)
+    log.info("%s will have their stream killed in %d mins, unless it is resumed",
+             stream.user, check_again_mins)
     time.sleep(60 * check_again_mins)
     current_streams = server.get_streams()
     if current_streams is None:
@@ -56,11 +58,13 @@ def kill_paused_stream(stream, check_again_mins, kick_reason):
                     watchlist.remove(stream.session_id)
                     return
                 else:
-                    log.error("Unable to kick the stream of %s, not sure why...", stream.user)
+                    log.error(
+                        "Unable to kick the stream of %s, not sure why...", stream.user)
                     watchlist.remove(stream.session_id)
                     return
             else:
-                log.info("%s stream was resumed, so we wont kill their stream, they're in the clear!", stream.user)
+                log.info(
+                    "%s stream was resumed, so we wont kill their stream, they're in the clear!", stream.user)
                 watchlist.remove(stream.session_id)
                 return
     log.info("%s is no longer streaming...", stream.user)
@@ -121,16 +125,20 @@ def check_streams():
             if not kick_mins:
                 # kick instantly....
                 if server.kill_stream(stream.session_id, kick_msg):
-                    log.info("Kicked %s instantly, without a second thought", stream.user)
+                    log.info(
+                        "Kicked %s instantly, without a second thought", stream.user)
                 else:
-                    log.error("Unable to kick the stream of %s, not sure why...", stream.user)
+                    log.error(
+                        "Unable to kick the stream of %s, not sure why...", stream.user)
             else:
                 # kick in X mins unless resumed
                 # is session already being watched?
                 if stream.session_id in watchlist:
-                    log.info("%s stream is already on the watchlist, skipping..", stream.user)
+                    log.info(
+                        "%s stream is already on the watchlist, skipping..", stream.user)
                 else:
-                    Thread(target=kill_paused_stream, args=(stream, kick_mins, kick_msg)).start()
+                    Thread(target=kill_paused_stream, args=(
+                        stream, kick_mins, kick_msg)).start()
                     watchlist.append(stream.session_id)
     log.debug("Finished checking streams")
 
@@ -139,7 +147,8 @@ if __name__ == "__main__":
     log.info("""PG Patrol Started
 """)
     log.info("Initializing")
-    log.info("Validating server %r with token %r", config.SERVER_URL, config.SERVER_TOKEN)
+    log.info("Validating server %r with token %r",
+             config.SERVER_URL, config.SERVER_TOKEN)
     server = Plex(config.SERVER_NAME, config.SERVER_URL, config.SERVER_TOKEN)
     if not server.validate():
         log.error("Could not validate server token, are you sure its correct...")
