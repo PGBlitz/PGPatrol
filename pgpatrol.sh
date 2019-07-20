@@ -74,8 +74,8 @@ selection1() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚡ Reference: http://pgpatrol.pgblitz.com
 
-1 - False
-2 - True
+[1] False
+[2] True
 
 EOF
   read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
@@ -94,7 +94,7 @@ selection2() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚡ Reference: http://pgpatrol.pgblitz.com
 
-Set a Number from 1 - 99
+Set a Number from [1] 99
 
 EOF
   read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
@@ -111,7 +111,7 @@ selection3() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚡ Reference: http://pgpatrol.pgblitz.com
 
-Set a Number from 5 - 999 Mintues
+Set a Number from [5] 999 Mintues
 
 EOF
   read -p 'Type Number | PRESS [ENTER] ' typed </dev/tty
@@ -134,10 +134,10 @@ question1() {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⚡ Reference: http://pgpatrol.pgblitz.com
 
-1 - Instantly Kick Video Transcodes?   [$video]
-2 - UserName | Multiple IPs?           [$ips]
-3 - Minutes  | Kick Paused Transcode?  [$minutes]
-4 - Deploy PGPatrol                    [$dstatus]
+[1] Instantly Kick Video Transcodes?   [$video]
+[2] UserName | Multiple IPs?           [$ips]
+[3] Minutes  | Kick Paused Transcode?  [$minutes]
+[4] Deploy PGPatrol                    [$dstatus]
 Z - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
