@@ -48,6 +48,7 @@ token() {
     ptoken=$(cat /var/plexguide/plex.token)
     if [ "$ptoken" == "" ]; then
       tee <<-EOF
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ⛔️  WARNING! - Failed to Generate a Valid Plex Token! Exiting Deployment!
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -138,9 +139,11 @@ question1() {
 [2] UserName | Multiple IPs?           [$ips]
 [3] Minutes  | Kick Paused Transcode?  [$minutes]
 [4] Deploy PGPatrol                    [$dstatus]
-Z - Exit
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[Z] Exit
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 EOF
 
   read -p '↘️  Type Number | Press [ENTER]: ' typed </dev/tty
